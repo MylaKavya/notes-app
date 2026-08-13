@@ -31,17 +31,24 @@ function displayNotes(notes) {
         noteElement.className = "note";
 
         noteElement.innerHTML = `
-    <h3>📝 ${note.title}</h3>
-    <p>📄 ${note.content}</p>
+    <h3>${note.title}</h3>
+
+    <p>${note.content}</p>
+
+    <small>
+        📅 Created: ${new Date(note.createdAt).toLocaleString()}
+    </small>
+
+    <br><br>
 
     <button class="edit-btn"
         onclick="editNote('${note._id}', '${escapeQuotes(note.title)}', '${escapeQuotes(note.content)}')">
-        ✏️ Edit
+        Edit
     </button>
 
     <button class="delete-btn"
         onclick="deleteNote('${note._id}')">
-        🗑️ Delete
+        Delete
     </button>
 `;
         container.appendChild(noteElement);
@@ -161,3 +168,19 @@ async function deleteNote(id) {
 
 // Load notes when page opens
 getNotes();
+async function searchNotes() {
+    const searchText = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const response = await fetch(API_URL);
+    const notes = await response.json();
+
+    const filteredNotes = notes.filter(note =>
+        note.title.toLowerCase().includes(searchText) ||
+        note.content.toLowerCase().includes(searchText)
+    );
+
+    displayNotes(filteredNotes);
+}

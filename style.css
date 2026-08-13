@@ -102,3 +102,14 @@ button:hover {
 .edit-btn:hover {
     background: #1e7e34;
 }
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
